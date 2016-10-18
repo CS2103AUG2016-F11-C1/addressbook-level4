@@ -60,6 +60,7 @@ public class AddController implements Controller {
         tokenDefinitions.put("time", new String[] { "at", "by", "on", "before", "time" });
         tokenDefinitions.put("timeFrom", new String[] { "from" });
         tokenDefinitions.put("timeTo", new String[] { "to" });
+        tokenDefinitions.put("tag", new String[] { "tag" });
         return tokenDefinitions;
     }
 
@@ -79,6 +80,7 @@ public class AddController implements Controller {
         
         // Name
         String name = parseName(parsedResult);
+        String tagName = parseTagName(parsedResult);
         
         // Time
         String[] naturalDates = parseDates(parsedResult);
@@ -104,12 +106,27 @@ public class AddController implements Controller {
         
         // Create and persist task / event.
         TodoListDB db = TodoListDB.getInstance();
-        createCalendarItem(db, isTask, name, dateFrom, dateTo);
+        createCalendarItem(db, isTask, name, dateFrom, dateTo, tagName);
         
         // Re-render
         Renderer.renderIndex(db, MESSAGE_ADD_SUCCESS);
     }
+    
+    /**
+     * Extracts the intended tagName from parsedResult.
+     * 
+     * @param parsedResult
+     * @return null if not tagName specified, else tagName
+     */
+    private String parseTagName(Map<String, String[]> parsedResult) {
+        if (parsedResult.get("tag") != null) {
+            //TODO : if we support more than 1 tag
+            return parsedResult.get("tag")[1];
+        } else {
+            return null;
+        }
 
+    }
     /**
      * Creates and persists a CalendarItem to the DB.
      * 
@@ -123,18 +140,22 @@ public class AddController implements Controller {
      *            Due date for Task or start date for Event
      * @param dateTo
      *            End date for Event
+     * @param tagName
+     *            Display name of tag for CalendarItem object          
      */
     private void createCalendarItem(TodoListDB db, 
-            boolean isTask, String name, LocalDateTime dateFrom, LocalDateTime dateTo) {
+            boolean isTask, String name, LocalDateTime dateFrom, LocalDateTime dateTo, String tagName) {
         if (isTask) {
             Task newTask = db.createTask();
             newTask.setName(name);
             newTask.setDueDate(dateFrom);
+            newTask.setTag(tagName);
         } else {
             Event newEvent = db.createEvent();
             newEvent.setName(name);
             newEvent.setStartDate(dateFrom);
             newEvent.setEndDate(dateTo);
+            newEvent.setTag(tagName);
         }
         db.save();
     }

@@ -22,6 +22,11 @@
         <Insets left="10.0" />
       </HBox.margin>
     </Text>
+    <Text fx:id="eventTagText" styleClass="tasklist-itemtime">
+      <HBox.margin>
+        <Insets left="10.0" />
+      </HBox.margin>
+    </Text>
     
   </children>
   <padding>
