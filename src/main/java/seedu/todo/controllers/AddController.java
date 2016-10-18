@@ -60,6 +60,7 @@ public class AddController implements Controller {
         tokenDefinitions.put("time", new String[] { "at", "by", "on", "before", "time" });
         tokenDefinitions.put("timeFrom", new String[] { "from" });
         tokenDefinitions.put("timeTo", new String[] { "to" });
+        tokenDefinitions.put("tag", new String[] { "tag" });
         return tokenDefinitions;
     }
 
@@ -130,11 +131,13 @@ public class AddController implements Controller {
             Task newTask = db.createTask();
             newTask.setName(name);
             newTask.setDueDate(dateFrom);
+            newTask.setTag(tagName);
         } else {
             Event newEvent = db.createEvent();
             newEvent.setName(name);
             newEvent.setStartDate(dateFrom);
             newEvent.setEndDate(dateTo);
+            newEvent.setTag(tagName);
         }
         db.save();
     }

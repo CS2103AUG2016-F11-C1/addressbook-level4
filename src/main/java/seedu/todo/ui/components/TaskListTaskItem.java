@@ -28,6 +28,8 @@ public class TaskListTaskItem extends MultiComponent {
     @FXML
     private Text taskTime;
     @FXML
+    private Text taskTagText;
+    @FXML
     private Text rowIndex;
     @FXML
     private Circle taskCheckMarkCircle;
@@ -46,8 +48,15 @@ public class TaskListTaskItem extends MultiComponent {
     @Override
     public void componentDidMount() {
         rowIndex.setText(displayIndex.toString());
-        taskText.setText(task.getName());
         
+        //TODO : tempview until tag view is up
+        if (task.getTag() != null) {
+            taskTagText.setText("Tag : " + task.getTag()); 
+        } else {
+            taskTagText.setText("");
+        }
+        
+        taskText.setText(task.getName());
         LocalDateTime dateTime = task.getCalendarDT();
         if (dateTime != null) {
             taskTime.setText(DateUtil.formatTime(dateTime));

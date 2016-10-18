@@ -15,6 +15,8 @@ public interface CalendarItem {
      * @param name
      */
     public void setName(String name);
+    public void setTag(String tagName);
+    public String getTag();
 
     /**
      * Get the calendar date of the calendar item. This is mostly for display

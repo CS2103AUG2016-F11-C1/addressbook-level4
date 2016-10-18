@@ -7,6 +7,7 @@ public class Task implements CalendarItem {
     private String name;
     private LocalDateTime dueDate;
     private boolean isCompleted = false;
+    private String tag;
 
     @Override
     public String getName() {
@@ -73,6 +74,16 @@ public class Task implements CalendarItem {
      */
     public void setIncomplete() {
         this.isCompleted = false;
+    }
+    
+    @Override
+    public void setTag(String tagName) {
+        this.tag = tagName;
+    }
+    
+    @Override
+    public String getTag() {
+        return this.tag;
     }
 
 }

@@ -55,6 +55,7 @@ public class InputHandler {
                                   new UpdateController(),
                                   new UndoController(),
                                   new RedoController(),
+                                  new UntagController(),
                                   new ConfigController(),
                                   new ExitController() };
     }

@@ -25,6 +25,8 @@ public class TaskListEventItem extends MultiComponent {
     @FXML
     private Text eventTime;
     @FXML
+    private Text eventTagText;
+    @FXML
     private Text rowIndex;
     @FXML
     private ImageView rowIconImageView;
@@ -40,6 +42,13 @@ public class TaskListEventItem extends MultiComponent {
 
     @Override
     public void componentDidMount() {
+        
+        //TODO : until tagview is up 
+        if (event.getTag() != null) {
+            eventTagText.setText("Tag: " + event.getTag());
+        } else {
+            eventTagText.setText("");
+        }
         eventText.setText(event.getName());
         eventTime.setText(DateUtil.formatDateFromTo(event.getStartDate(), event.getEndDate()));
         rowIndex.setText(displayIndex.toString());
