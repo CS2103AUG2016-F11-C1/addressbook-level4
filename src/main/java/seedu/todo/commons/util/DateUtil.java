@@ -8,7 +8,11 @@ import java.time.format.TextStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import com.joestelmach.natty.DateGroup;
+import com.joestelmach.natty.Parser;
 
 /**
  * A utility class for Dates and LocalDateTimes
@@ -50,6 +54,21 @@ public class DateUtil {
         }
         
         return dateTime.toLocalDate().atTime(0, 0);
+    }
+    
+    /**
+     * Performs a "ceiling" operation on a LocalDateTime, and returns a new LocalDateTime
+     * with time set to 23:59.
+     * 
+     * @param dateTime   LocalDateTime for operation to be performed on.
+     * @return           "Ceiled" LocalDateTime.
+     */
+    public static LocalDateTime ceilDate(LocalDateTime dateTime) {
+        if (dateTime == null) {
+            return null;
+        }
+        
+        return dateTime.toLocalDate().atTime(23, 59);
     }
 
     /**
@@ -216,6 +235,79 @@ public class DateUtil {
     public static LocalDateTime parseDateTime(String dateTimeString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.parse(dateTimeString, formatter);
+    }
+    
+    /*
+     * Check a LocalDateTime if the time is the same as the current time
+     * 
+     * @param date
+     * @return true if it is not the same as current time, false if it is the same as current time 
+     */
+    public static boolean checkIfTimeExist(LocalDateTime date) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        return currentTime.getHour() != date.getHour() || currentTime.getMinute() != date.getMinute();
+    }
+    
+    /*
+     * Check a LocalDateTime if the date is the same as the current date
+     * 
+     * @param date
+     * @return true if it is not the same as current date, false if it is the same as current date 
+     */
+    public static boolean checkIfDateExist(LocalDateTime date) {
+        LocalDateTime currentDate = LocalDateTime.now();
+        return currentDate.getDayOfYear() != date.getDayOfYear() || currentDate.getMonth() != date.getMonth() || 
+                currentDate.getYear() != date.getYear();
+    }
+    
+    /*
+     * To be used to parse natural date into LocalDateTime 
+     * @parser Natty
+     * 
+     * */
+    public static LocalDateTime parseNatural(String natural) {
+        Parser parser = new Parser();
+        List<DateGroup> groups = parser.parse(natural);
+        Date date = null;
+        try {
+            date = groups.get(0).getDates().get(0);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+        LocalDateTime ldt = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        return ldt;
+    }
+    
+    /* @@author A0139922Y
+     * To convert LocalDateTime to 00:00 or 23:59 if not specified
+     * @param actualDate 
+     *                  is the date that that is require for checking
+     * @param checkedDate
+     *                  is the date to be used for checking
+     * @isDateFrom
+     *                  if true, actualDate is dateFrom, false if actualDate is dateTo                 
+     * 
+     * @return the correct date format
+     */
+    public static LocalDateTime parseTimeStamp(LocalDateTime actualDate, LocalDateTime checkedDate, boolean isDateFrom) {
+        //check for date
+        if (checkedDate != null && actualDate != null && checkIfDateExist(checkedDate) && !checkIfDateExist(actualDate)) {
+            if (!isDateFrom) {
+                actualDate = checkedDate.toLocalDate().atTime(actualDate.getHour(), actualDate.getMinute());
+            }
+        }
+        //check for time
+        if (checkedDate != null && actualDate != null && checkIfTimeExist(checkedDate) && !checkIfTimeExist(actualDate)) {
+            actualDate = actualDate.toLocalDate().atTime(checkedDate.getHour(), checkedDate.getMinute());            
+        }
+        if (actualDate != null && !checkIfTimeExist(actualDate)) {
+            if (isDateFrom) {
+                actualDate = floorDate(actualDate);
+            } else {
+                actualDate = ceilDate(actualDate);
+            }
+        }
+        return actualDate;
     }
 
 }

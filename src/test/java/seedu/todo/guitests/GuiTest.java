@@ -16,6 +16,7 @@ import seedu.todo.commons.core.EventsCenter;
 import seedu.todo.commons.events.BaseEvent;
 import seedu.todo.guitests.guihandles.ConsoleHandle;
 import seedu.todo.guitests.guihandles.MainGuiHandle;
+import seedu.todo.guitests.guihandles.SideBarHandle;
 import seedu.todo.guitests.guihandles.TaskListHandle;
 import seedu.todo.models.TodoListDB;
 
@@ -34,6 +35,7 @@ public abstract class GuiTest {
     protected MainGuiHandle mainGui;
     protected ConsoleHandle console;
     protected TaskListHandle taskList;
+    protected SideBarHandle sidebar;
     
     private Stage stage;
     
@@ -53,6 +55,7 @@ public abstract class GuiTest {
             mainGui = new MainGuiHandle(new GuiRobot(), stage);
             console = mainGui.getConsole();
             taskList = mainGui.getTaskList();
+            sidebar = mainGui.getSideBar();
             // TODO: create handles for other components
             this.stage = stage;
         });

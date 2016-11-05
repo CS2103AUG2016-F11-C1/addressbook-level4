@@ -15,12 +15,15 @@ public class TagListItem extends MultiComponent {
 
     // Props
     public String tag;
+    public int tagCount;
 
     // FXML
     @FXML
     private Text labelText;
     @FXML
     private Circle labelBullet;
+    @FXML
+    private Text labelTextCount;
 
     @Override
     public String getFxmlPath() {
@@ -31,6 +34,11 @@ public class TagListItem extends MultiComponent {
     public void componentDidMount() {
         labelText.setText(tag);
         labelBullet.setFill(BULLET_COLOR);
+        labelTextCount.setText(formatTagCount(tagCount));
+    }
+    
+    private String formatTagCount(int count) {
+        return String.format("(%d)", count);
     }
 
 }

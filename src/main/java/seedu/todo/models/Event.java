@@ -78,14 +78,25 @@ public class Event implements CalendarItem {
         }
     }
 
+    /**
+     * @@author A0139922Y
+     * Return the tag list that belong to the calendar item
+     * 
+     */
     @Override
-    //@@author Tiong YaoCong A0139922Y
     public ArrayList<String> getTagList() {
         return tagList;
     }
 
+    /**
+     * @@author A0139922Y
+     * Adding the tag into the tag list that belong to the calendar item
+     * @param tagName
+     *               name of the tag
+     *               
+     * @return true tag name is successfully added, false if tag list if full         
+     */
     @Override
-    //@@author Tiong YaoCong A0139922Y
     public boolean addTag(String tagName) {
         if(tagList.size() < MAX_TAG_LIST_SIZE) {
             tagList.add(tagName);
@@ -95,10 +106,27 @@ public class Event implements CalendarItem {
         }
     }
 
+    /**
+     * @@author A0139922Y
+     * Removing the tag from the tag list that belong to the calendar item
+     * @param tagName
+     *               name of the tag
+     *               
+     * @return true tag name is successfully removed, false if tag name does not exist    
+     */
     @Override
-    //@@author Tiong YaoCong A0139922Y
     public boolean removeTag(String tagName) {
         return tagList.remove(tagName);
+    }
+
+    /**
+     * @@author A0139922Y
+     * Returning the maximum tag list size that is allowed
+     *               
+     */
+    @Override
+    public int getTagListLimit() {
+        return MAX_TAG_LIST_SIZE;
     }
 
 }

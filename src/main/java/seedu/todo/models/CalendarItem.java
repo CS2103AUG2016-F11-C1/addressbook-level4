@@ -51,29 +51,36 @@ public interface CalendarItem {
     public boolean isOver();
     
     /**
+     * @@author A0139922Y
      * Returns the current tag list that belong to the CalendarItem, mainly for displaying purpose
      * 
      * @return ArrayList<String> tags
-     * @@author Tiong YaoCong A0139922Y
      */
     public ArrayList<String> getTagList();
    
     /**
+     * @@author A0139922Y
      * Add a new tag in the list of tag of the calendar item. 
      * 
      * @param tagName <String>
      * @return true if it has not reached the max tag list size, false if tag list already reach the max size
-     * @@author Tiong YaoCong A0139922Y
      */
     public boolean addTag(String tagName);
     
     /**
+     * @@author A0139922Y
      * Remove a existing tag in the tag list of tag of the calendar item. 
      * 
      * @param tagName <String>
      * @return true if tagName is removed successfully, false if failed to remove tagName due to unable to find
-     * @@author Tiong YaoCong A0139922Y
      */
     public boolean removeTag(String tagName);
 
+    /**
+     * @@author A0139922Y
+     * Get the limit of the tag that is allowed for calendar item
+     * 
+     * @return the limit of tag list
+     */    
+    public int getTagListLimit();
 }

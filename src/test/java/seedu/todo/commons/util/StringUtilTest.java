@@ -10,9 +10,7 @@ import java.io.FileNotFoundException;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class StringUtilTest {
 
@@ -77,5 +75,72 @@ public class StringUtilTest {
         String first = null;
         String last = "lastString";
         assertEquals(StringUtil.replaceEmpty(first, last), last);
+    }
+    
+    //@@author A0139922Y
+    @Test
+    public void testSplitStringBySpace_null_test() {
+        assertNull(StringUtil.splitStringBySpace(null));
+    }
+
+    //@@author A0139922Y
+    @Test 
+    public void testSplitStringBySpace_equals() {
+        String testcase1 = "TEST";
+        String testcase2 = "TEST TEST";
+        assertNotNull(StringUtil.splitStringBySpace(testcase1));
+        assertArrayEquals(testcase1.split(" "), StringUtil.splitStringBySpace(testcase1));
+        assertNotNull(StringUtil.splitStringBySpace(testcase2));
+        assertArrayEquals(testcase2.split(" "),StringUtil.splitStringBySpace(testcase2));
+    }
+    
+    //@@author A0139922Y    
+    @Test
+    public void testFormatNumberOfTaskWithPuralizer_equals() {
+        int single = 1;
+        assertEquals(String.format("%d task", single), StringUtil.formatNumberOfTaskWithPuralizer(single));
+        int pural = 2;
+        assertEquals(String.format("%d tasks", pural), StringUtil.formatNumberOfTaskWithPuralizer(pural));
+    }
+    
+    //@@author A0139922Y    
+    @Test
+    public void testFormatNumberOfTaskWithPuralizer_not_equals() {
+        int single = 1;
+        assertNotEquals(String.format("%d tasks", single), StringUtil.formatNumberOfTaskWithPuralizer(single));
+        int pural = 2;
+        assertNotEquals(String.format("%d task", pural), StringUtil.formatNumberOfTaskWithPuralizer(pural));
+    }
+
+    //@@author A0139922Y
+    @Test
+    public void testFormatNumberOfEventWithPuralizer_equals() {
+        int single = 1;
+        assertEquals(String.format("%d event", single), StringUtil.formatNumberOfEventWithPuralizer(single));
+        int pural = 2;
+        assertEquals(String.format("%d events", pural), StringUtil.formatNumberOfEventWithPuralizer(pural));
+    }
+    
+    //@@author A0139922Y    
+    @Test
+    public void testFormatNumberOfEventWithPuralizer_not_equals() {
+        int single = 1;
+        assertNotEquals(String.format("%d events", single), StringUtil.formatNumberOfEventWithPuralizer(single));
+        int pural = 2;
+        assertNotEquals(String.format("%d event", pural), StringUtil.formatNumberOfEventWithPuralizer(pural));
+    }
+    
+    //@@author A0139922Y    
+    @Test
+    public void testDisplayNumberOfTaskAndEventFoundWithPuralizer_equals() {
+        int numTasks = 0;
+        int numEvents = 0;
+        assertEquals("No item found!", StringUtil.displayNumberOfTaskAndEventFoundWithPuralizer(numTasks, numEvents));
+        numTasks = 1;
+        assertEquals("1 task", StringUtil.displayNumberOfTaskAndEventFoundWithPuralizer(numTasks, numEvents));
+        numEvents = 1;
+        assertEquals("1 task and 1 event", StringUtil.displayNumberOfTaskAndEventFoundWithPuralizer(numTasks, numEvents));
+        numTasks = 0;
+        assertEquals("1 event", StringUtil.displayNumberOfTaskAndEventFoundWithPuralizer(numTasks, numEvents));
     }
 }

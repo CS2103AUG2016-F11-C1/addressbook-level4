@@ -20,6 +20,11 @@
           </HBox.margin>
         </Circle>
         <Text fx:id="labelText" styleClass="taglist-item-text" HBox.hgrow="ALWAYS" />
+        <Text fx:id="labelTextCount" styleClass="taglist-item-text" HBox.hgrow="ALWAYS" >
+          <HBox.margin>
+	        <Insets left="10.0" />
+	      </HBox.margin>
+	    </Text>
       </children>
     </HBox>
     

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import seedu.todo.models.CalendarItem;
+import seedu.todo.models.Event;
+import seedu.todo.models.Task;
 
 /**
  * @@author A0093907W
@@ -74,6 +76,28 @@ public class EphemeralDB {
      */
     public void clearDisplayedCalendarItems() {
         displayedCalendarItems.clear();
+    }
+    
+    public List<Task> getAllDisplayedTasks() {
+        List<Task> tasks = new ArrayList<Task>();
+        for (int i = 0; i < displayedCalendarItems.size(); i ++) {
+            CalendarItem calendarItem = displayedCalendarItems.get(i);
+            if (calendarItem instanceof Task) {
+                tasks.add((Task) calendarItem);
+            }
+        }
+        return tasks;
+    }
+    
+    public List<Event> getAllDisplayedEvents() {
+        List<Event> events = new ArrayList<Event>();
+        for (int i = 0; i < displayedCalendarItems.size(); i ++) {
+            CalendarItem calendarItem = displayedCalendarItems.get(i);
+            if (calendarItem instanceof Event) {
+                events.add((Event) calendarItem);
+            }
+        }
+        return events;
     }
 
 }

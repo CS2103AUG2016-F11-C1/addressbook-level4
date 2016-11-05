@@ -21,4 +21,7 @@ public class MainGuiHandle extends GuiHandle {
         return new TaskListHandle(guiRobot, primaryStage, TestApp.APP_TITLE);
     }
     
+    public SideBarHandle getSideBar() {
+        return new SideBarHandle(guiRobot, primaryStage, TestApp.APP_TITLE);
+    }
 }

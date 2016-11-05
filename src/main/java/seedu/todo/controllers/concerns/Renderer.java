@@ -1,7 +1,12 @@
 package seedu.todo.controllers.concerns;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
+import seedu.todo.commons.util.DateUtil;
+import seedu.todo.commons.util.FilterUtil;
 import seedu.todo.models.Event;
 import seedu.todo.models.Task;
 import seedu.todo.models.TodoListDB;
@@ -40,12 +45,13 @@ public class Renderer {
     }
     
     /**
-     * Renders the indexView.
+     * Renders the indexView with selected tasks and events. 
+     * Mainly use by List and Find Controller to display filtered results. 
      * 
      * @param db
      * @param consoleMessage to be rendered in console, leave null if not needed
      */
-    public static void renderSelected(TodoListDB db, String consoleMessage, List<Task> tasks, List<Event> events) {
+    public static void renderSelectedIndex(TodoListDB db, String consoleMessage, List<Task> tasks, List<Event> events) {
         IndexView view = UiManager.loadView(IndexView.class);
         
         if (tasks != null) {
@@ -71,8 +77,12 @@ public class Renderer {
      */
     public static void renderIndex(TodoListDB db, String consoleMessage) {
         IndexView view = UiManager.loadView(IndexView.class);
-        view.tasks = db.getIncompleteTasksAndTaskFromTodayDate();
-        view.events = db.getAllCurrentEvents();
+        HashSet<Task> tasksList = new HashSet<Task>();
+        tasksList.addAll(FilterUtil.filterTasksByStatus(db.getAllTasks(), false));
+        tasksList.addAll(FilterUtil.filterTaskWithDateRange(db.getAllTasks(), 
+                DateUtil.floorDate(LocalDateTime.now()), DateUtil.ceilDate(LocalDateTime.now())));
+        view.tasks = new ArrayList<Task>(tasksList);    
+        view.events = FilterUtil.filterEventsByStatus(db.getAllEvents(), false);
         view.tags = db.getTagList();
         UiManager.renderView(view);
         

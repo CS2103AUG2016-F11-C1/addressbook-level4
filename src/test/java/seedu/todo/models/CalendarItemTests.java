@@ -77,30 +77,22 @@ public class CalendarItemTests {
         assertTrue(event.addTag("A"));
         assertTrue(event.addTag("B"));
         assertEquals(event.getTagList().size(), 2);
-    }
-    
-    @Test
-    public void test_event_tag_list_add_tag_to_boundary() {
-        Event event = new Event();
+        
+        event = new Event();
         for (int i = 0; i < 20; i ++) {
-            event.addTag(Integer.toString(i));
+            assertTrue(event.addTag(Integer.toString(i)));
         }
         assertEquals(event.getTagList().size(), 20);
         assertFalse(event.addTag("A"));
     }
     
     @Test
-    public void test_event_tag_list_remove_tag_succesfully() {
+    public void test_event_tag_list_remove_tag() {
         Event event = new Event();
         event.addTag("A");
         event.addTag("B");
         assertTrue(event.removeTag("A"));
-    }
-    
-    @Test
-    public void test_event_tag_list_remove_tag_unsuccessfully() {
-        Event event = new Event();
-        assertFalse(event.removeTag("A"));
+        assertFalse(event.removeTag("C"));
     }
     
     @Test

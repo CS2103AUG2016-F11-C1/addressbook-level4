@@ -1,7 +1,8 @@
 package seedu.todo.ui.components;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
@@ -26,7 +27,7 @@ public class Sidebar extends Component {
     private static final String TAG_LABEL = "Tags";
     
     // Props
-    public List<String> tags = new ArrayList<>();
+    public HashMap<String, Integer> tags = new HashMap<String, Integer>();
 
     // FXML
     @FXML
@@ -77,10 +78,13 @@ public class Sidebar extends Component {
 
     private void loadTags() {
         TagListItem.reset(sidebarTagsPlaceholder);
-
-        for (String tag : tags) {
+        
+        ArrayList<String> tagKeys = new ArrayList<String>(tags.keySet());
+        Collections.sort(tagKeys);
+        for (String tag : tagKeys) {
             TagListItem item = load(primaryStage, sidebarTagsPlaceholder, TagListItem.class);
             item.tag = tag;
+            item.tagCount = tags.get(tag);
             item.render();
         }
     }

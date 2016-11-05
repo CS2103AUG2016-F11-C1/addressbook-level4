@@ -2,6 +2,7 @@ package seedu.todo.controllers;
 
 import java.util.Arrays;
 
+import seedu.todo.commons.util.StringUtil;
 import seedu.todo.ui.UiManager;
 import seedu.todo.ui.views.HelpView;
 
@@ -18,6 +19,7 @@ public class HelpController implements Controller {
     private static final String COMMAND_SYNTAX = "help";
     
     private static final String MESSAGE_HELP_SUCCESS = "Showing all commands.";
+    private static final int COMMAND_INPUT_INDEX = 0;
     
     private static CommandDefinition commandDefinition =
             new CommandDefinition(NAME, DESCRIPTION, COMMAND_SYNTAX); 
@@ -28,7 +30,7 @@ public class HelpController implements Controller {
 
     @Override
     public float inputConfidence(String input) {
-        return (input.toLowerCase().startsWith("help")) ? 1 : 0;
+        return (StringUtil.splitStringBySpace(input.toLowerCase())[COMMAND_INPUT_INDEX]).equals(COMMAND_SYNTAX) ? 1 : 0;
     }
 
     @Override
@@ -49,7 +51,6 @@ public class HelpController implements Controller {
                                          UncompleteTaskController.getCommandDefinition(),
                                          DestroyController.getCommandDefinition(),
                                          ConfigController.getCommandDefinition(),
-                                         DestroyController.getCommandDefinition(),
                                          ClearController.getCommandDefinition(),
                                          FindController.getCommandDefinition(),
                                          TagController.getCommandDefinition(),

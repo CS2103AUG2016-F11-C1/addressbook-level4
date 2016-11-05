@@ -1,6 +1,7 @@
 package seedu.todo.ui.views;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javafx.fxml.FXML;
@@ -29,7 +30,7 @@ public class IndexView extends View {
     // Props
     public List<Event> events = new ArrayList<>();
     public List<Task> tasks = new ArrayList<>();
-    public List<String> tags = new ArrayList<>();
+    public HashMap<String, Integer> tags = new HashMap<String, Integer>();
 
     @Override
     public String getFxmlPath() {

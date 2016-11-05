@@ -6,11 +6,11 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import seedu.todo.commons.core.EventsCenter;
 import seedu.todo.ui.UiManager;
-import seedu.todo.ui.views.IndexView;
 import seedu.todo.commons.core.Config;
 import seedu.todo.commons.exceptions.DataConversionException;
 import seedu.todo.commons.util.ConfigUtil;
 import seedu.todo.commons.util.StringUtil;
+import seedu.todo.controllers.concerns.Renderer;
 import seedu.todo.commons.core.LogsCenter;
 import seedu.todo.commons.core.Version;
 import seedu.todo.commons.events.ui.ExitAppRequestEvent;
@@ -68,15 +68,8 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         ui.start(primaryStage);
-
-        IndexView view = UiManager.loadView(IndexView.class);
-        view.tasks = TodoListDB.getInstance().getIncompleteTasksAndTaskFromTodayDate();
-        view.events = TodoListDB.getInstance().getAllCurrentEvents();
-        view.tags = TodoListDB.getInstance().getTagList();
-        UiManager.renderView(view);
-        
-        // Show welcome message
-        UiManager.updateConsoleMessage(MESSAGE_WELCOME);
+        TodoListDB db = TodoListDB.getInstance();
+        Renderer.renderIndex(db, MESSAGE_WELCOME);
     }
 
     @Override
