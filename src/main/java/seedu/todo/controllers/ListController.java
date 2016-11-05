@@ -280,7 +280,7 @@ public class ListController implements Controller {
         //if any tasks or events found, update console message to display found successfully
         //      else display failure message
         if (numTasks != 0 || numEvents != 0) {
-            consoleMessage = String.format(MESSAGE_LISTING_SUCCESS, StringUtil.formatNumberOfTaskAndEventWithPuralizer(numTasks, numEvents));
+            consoleMessage = String.format(MESSAGE_LISTING_SUCCESS, StringUtil.displayNumberOfTaskAndEventFoundWithPuralizer(numTasks, numEvents));
         } else {
             consoleMessage = MESSAGE_LISTING_FAILURE;
         }

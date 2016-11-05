@@ -231,7 +231,7 @@ public class ClearController implements Controller {
         
         //save and render
         db.save();
-        Renderer.renderIndex(db, String.format(MESSAGE_CLEAR_SUCCESS, StringUtil.formatNumberOfTaskAndEventWithPuralizer(numTasks, numEvents)));
+        Renderer.renderIndex(db, String.format(MESSAGE_CLEAR_SUCCESS, StringUtil.displayNumberOfTaskAndEventFoundWithPuralizer(numTasks, numEvents)));
     }
     
 
@@ -278,7 +278,7 @@ public class ClearController implements Controller {
         
         //save and render
         db.save();
-        Renderer.renderIndex(db, String.format(MESSAGE_CLEAR_SUCCESS, StringUtil.formatNumberOfTaskAndEventWithPuralizer(numTasks, numEvents)));
+        Renderer.renderIndex(db, String.format(MESSAGE_CLEAR_SUCCESS, StringUtil.displayNumberOfTaskAndEventFoundWithPuralizer(numTasks, numEvents)));
     }
 
     /**
