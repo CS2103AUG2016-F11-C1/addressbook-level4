@@ -8,16 +8,11 @@ import java.time.format.TextStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
-import com.joestelmach.natty.DateGroup;
-import com.joestelmach.natty.Parser;
-
+// @@author A0139812A
 /**
  * A utility class for Dates and LocalDateTimes
- * 
- * @@author A0139812A
  */
 public class DateUtil {
     
@@ -31,6 +26,7 @@ public class DateUtil {
     private static final String DAY = "day";
     private static final String DAYS = "days";
     
+    // @@author A0139812A
     /**
      * Converts a LocalDateTime object to a legacy java.util.Date object.
      * 
@@ -41,6 +37,7 @@ public class DateUtil {
         return Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
+    // @@author A0139812A
     /**
      * Performs a "floor" operation on a LocalDateTime, and returns a new LocalDateTime
      * with time set to 00:00.
@@ -56,8 +53,8 @@ public class DateUtil {
         return dateTime.toLocalDate().atTime(0, 0);
     }
     
+    // @@author A0139922Y
     /**
-     * @@author A0139922Y
      * Performs a "ceiling" operation on a LocalDateTime, and returns a new LocalDateTime
      * with time set to 23:59.
      * 
@@ -71,7 +68,8 @@ public class DateUtil {
         
         return dateTime.toLocalDate().atTime(23, 59);
     }
-
+    
+    // @@author A0139812A
     /**
      * Formats a LocalDateTime to a relative date. 
      * Prefers DayOfWeek format, for dates up to 6 days from today.
@@ -108,6 +106,7 @@ public class DateUtil {
                 daysDifference > 0 ? FROM_NOW : TILL_NOW);
     }
     
+    // @@author A0139812A
     /**
      * Formats a LocalDateTime to a short date. Excludes the day of week only if
      * the date is within 2-6 days from now.
@@ -134,6 +133,7 @@ public class DateUtil {
         return date.format(DateTimeFormatter.ofPattern(dateFormat));
     }
     
+    // @@author A0139812A
     /**
      * Parses a short date (as defined in {@link formatShortDate}) back to a LocalDateTime.
      * We ignore the day of week portion for simplicity, since the shortDate can optionally omit it.
@@ -162,6 +162,7 @@ public class DateUtil {
         return LocalDate.parse(dateString, formatter);
     }
     
+    // @@author A0139812A
     /**
      * Formats a LocalDateTime to a 24-hour time.
      * 
@@ -176,6 +177,7 @@ public class DateUtil {
         return dateTime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
     }
     
+    // @@author A0139812A
     /**
      * Formats a LocalDateTime into short date + time format.
      * @param dateTime   LocalDateTime to format.
@@ -185,6 +187,7 @@ public class DateUtil {
         return String.format("%s %s", formatShortDate(dateTime), formatTime(dateTime));
     }
     
+    // @@author A0139812A
     /**
      * Formats a start date and end date to a date range, which will display only as much info as necessary.
      * @param dateFrom   LocalDateTime from.
@@ -206,9 +209,9 @@ public class DateUtil {
             return String.format("%s - %s", formatDateTime(dateFrom), formatDateTime(dateTo));
         }
     }
-    
+
+    // @@author A0139812A
     /**
-     * @@author A0139922Y
      * Parses a dateTime string with the standard ISO format {@code yyyy-MM-dd HH:mm:ss}.
      * 
      * @param dateTimeString
@@ -218,8 +221,9 @@ public class DateUtil {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.parse(dateTimeString, formatter);
     }
-    
-    /*
+
+    // @@author A0139922Y    
+    /**
      * Check a LocalDateTime if the time is the same as the current time
      * 
      * @param date
@@ -229,9 +233,9 @@ public class DateUtil {
         LocalDateTime currentTime = LocalDateTime.now();
         return currentTime.getHour() != date.getHour() || currentTime.getMinute() != date.getMinute();
     }
-    
-    /*
-     * @@author A0139922Y
+
+    // @@author A0139922Y
+    /**
      * Check a LocalDateTime if the date is the same as the current date
      * 
      * @param date
@@ -243,8 +247,8 @@ public class DateUtil {
                 currentDate.getYear() != date.getYear();
     }
     
-    /* 
-     * @@author A0139922Y
+    // @@author A0139922Y
+    /**
      * To convert LocalDateTime to 00:00 or 23:59 if not specified
      * @param actualDate 
      *                  is the date that that is require for checking
