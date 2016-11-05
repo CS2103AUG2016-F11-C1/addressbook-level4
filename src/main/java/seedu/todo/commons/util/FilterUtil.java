@@ -119,6 +119,7 @@ public class FilterUtil {
         while (iterator.hasNext()) {
             Task task = iterator.next();
             assert date != null;
+            date = DateUtil.floorDate(date);
             LocalDateTime taskDate = DateUtil.floorDate(task.getCalendarDateTime());
             
             //May have floating tasks
@@ -160,6 +161,8 @@ public class FilterUtil {
                 taskDate = DateUtil.floorDate(LocalDateTime.MIN);
             }
             
+            startDate = DateUtil.floorDate(startDate);
+            endDate = DateUtil.ceilDate(endDate);
             if (taskDate.compareTo(startDate) >= 0 && taskDate.compareTo(endDate) <= 0) {
                 filteredTasks.add(task);
             }
@@ -266,8 +269,8 @@ public class FilterUtil {
         Iterator<Event> iterator = events.iterator();
         while (iterator.hasNext()) {
             Event event = iterator.next();
+            date = DateUtil.floorDate(date);
             LocalDateTime eventDate = DateUtil.floorDate(event.getStartDate());
-            //May have floating tasks
             if (eventDate != null && eventDate.equals(date)) {
                 filteredEvents.add(event);
             }
@@ -310,6 +313,9 @@ public class FilterUtil {
             if (eventEndDate == null) {
                 eventEndDate = DateUtil.floorDate(LocalDateTime.MAX);
             }
+            
+            startDate = DateUtil.floorDate(startDate);
+            endDate = DateUtil.ceilDate(endDate);
             if (eventStartDate.compareTo(startDate) >= 0 && eventEndDate.compareTo(endDate) <= 0) {
                 filteredEvents.add(event);
             }

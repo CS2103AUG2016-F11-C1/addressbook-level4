@@ -14,9 +14,9 @@ import seedu.todo.models.Task;
 
 //@@author A0139922Y
 public class FilterUtilTest {
-    public static final LocalDateTime today = LocalDateTime.now();
-    public static final LocalDateTime tmr = LocalDateTime.now().plusDays(1);
-    public static final LocalDateTime ytd = LocalDateTime.now().minusDays(1);
+    public static final LocalDateTime TODAY = LocalDateTime.now();
+    public static final LocalDateTime TOMORROW = LocalDateTime.now().plusDays(1);
+    public static final LocalDateTime YESTERDAY = LocalDateTime.now().minusDays(1);
     Task firstTestTask = generateFirstTestTask();
     Task secondTestTask = generateSecondTestTask();
     List<Event> overdueEvents = generateOverdueEvents();
@@ -154,7 +154,7 @@ public class FilterUtilTest {
     @Test
     public void testFilterTaskBySingleDate_equals() {
         List<Task> tasks = getEmptyTaskList();
-        assertEquals(tasks, FilterUtil.filterTaskBySingleDate(tasks, DateUtil.floorDate(today)));
+        assertEquals(tasks, FilterUtil.filterTaskBySingleDate(tasks, DateUtil.floorDate(TODAY)));
         assertEquals(tasks, FilterUtil.filterTaskBySingleDate(tasks, null));
         tasks.add(firstTestTask);
         tasks.add(secondTestTask);
@@ -162,12 +162,12 @@ public class FilterUtilTest {
         //filter out first task
         List<Task> filteredTasks = getEmptyTaskList();
         filteredTasks.add(firstTestTask);
-        assertEquals(filteredTasks, FilterUtil.filterTaskBySingleDate(filteredTasks, DateUtil.floorDate(today)));
+        assertEquals(filteredTasks, FilterUtil.filterTaskBySingleDate(filteredTasks, DateUtil.floorDate(TODAY)));
         
         //filter out second task
         filteredTasks = getEmptyTaskList();
         filteredTasks.add(secondTestTask);
-        assertEquals(filteredTasks, FilterUtil.filterTaskBySingleDate(filteredTasks, DateUtil.floorDate(tmr)));
+        assertEquals(filteredTasks, FilterUtil.filterTaskBySingleDate(filteredTasks, DateUtil.floorDate(TOMORROW)));
     }
     
     @Test
@@ -176,8 +176,8 @@ public class FilterUtilTest {
         tasks.add(firstTestTask);
         tasks.add(secondTestTask);
         
-        assertNotEquals(tasks, FilterUtil.filterTaskBySingleDate(tasks, today));
-        assertNotEquals(tasks, FilterUtil.filterTaskBySingleDate(tasks, tmr));
+        assertNotEquals(tasks, FilterUtil.filterTaskBySingleDate(tasks, TODAY));
+        assertNotEquals(tasks, FilterUtil.filterTaskBySingleDate(tasks, TOMORROW));
     }
 
     @Test
@@ -195,17 +195,17 @@ public class FilterUtilTest {
         //filter out first task
         List<Task> filteredTasks = getEmptyTaskList();
         filteredTasks.add(firstTestTask);
-        assertEquals(getEmptyTaskList(), FilterUtil.filterTaskWithDateRange(tasks, today, today));
+        assertEquals(filteredTasks, FilterUtil.filterTaskWithDateRange(tasks, TODAY, TODAY));
         
         //filter out second task
         filteredTasks = getEmptyTaskList();
         filteredTasks.add(secondTestTask);
-        assertEquals(getEmptyTaskList(), FilterUtil.filterTaskWithDateRange(tasks, tmr, tmr));
+        assertEquals(filteredTasks, FilterUtil.filterTaskWithDateRange(tasks, TOMORROW, TOMORROW));
         
         //filter out both task
-        assertEquals(tasks, FilterUtil.filterTaskWithDateRange(tasks, ytd, tmr));
-        assertEquals(tasks, FilterUtil.filterTaskWithDateRange(tasks, null, tmr));
-        assertEquals(tasks, FilterUtil.filterTaskWithDateRange(tasks, ytd, null));
+        assertEquals(tasks, FilterUtil.filterTaskWithDateRange(tasks, YESTERDAY, TOMORROW));
+        assertEquals(tasks, FilterUtil.filterTaskWithDateRange(tasks, null, TOMORROW));
+        assertEquals(tasks, FilterUtil.filterTaskWithDateRange(tasks, YESTERDAY, null));
     }
 
     @Test
@@ -330,10 +330,10 @@ public class FilterUtilTest {
     public void testFilterEventBySingleDate_equals() {
         List<Event> events = new ArrayList<Event>();
         //events is empty
-        assertEquals(events, FilterUtil.filterEventBySingleDate(events, today));
+        assertEquals(events, FilterUtil.filterEventBySingleDate(events, TODAY));
         //filter out overdue events 
         events.addAll(overdueEvents);
-        assertEquals(events, FilterUtil.filterEventBySingleDate(events, DateUtil.floorDate(ytd)));
+        assertEquals(events, FilterUtil.filterEventBySingleDate(events, DateUtil.floorDate(YESTERDAY)));
     }
     
     @Test
@@ -342,22 +342,22 @@ public class FilterUtilTest {
         
         //filter out current events 
         events.addAll(currentEvents);
-        assertNotEquals(events, FilterUtil.filterEventBySingleDate(events, DateUtil.floorDate(ytd)));
+        assertNotEquals(events, FilterUtil.filterEventBySingleDate(events, DateUtil.floorDate(YESTERDAY)));
     }
 
     @Test
     public void testFilterEventWithDateRange_equals() {
         List<Event> events = new ArrayList<Event>();
         //events is empty
-        assertEquals(events, FilterUtil.filterEventWithDateRange(events, ytd, ytd));
+        assertEquals(events, FilterUtil.filterEventWithDateRange(events, YESTERDAY, YESTERDAY));
         //filter out overdue events 
         events.addAll(overdueEvents);
-        assertEquals(events, FilterUtil.filterEventWithDateRange(events, DateUtil.floorDate(ytd), DateUtil.ceilDate(ytd)));
+        assertEquals(events, FilterUtil.filterEventWithDateRange(events, DateUtil.floorDate(YESTERDAY), DateUtil.ceilDate(YESTERDAY)));
         //filter out both overdue and current events
         events.addAll(currentEvents);
-        assertEquals(events, FilterUtil.filterEventWithDateRange(events, DateUtil.floorDate(ytd), DateUtil.ceilDate(tmr)));
-        assertEquals(events, FilterUtil.filterEventWithDateRange(events, null, DateUtil.ceilDate(tmr)));
-        assertEquals(events, FilterUtil.filterEventWithDateRange(events, DateUtil.floorDate(ytd), null));
+        assertEquals(events, FilterUtil.filterEventWithDateRange(events, DateUtil.floorDate(YESTERDAY), DateUtil.ceilDate(TOMORROW)));
+        assertEquals(events, FilterUtil.filterEventWithDateRange(events, null, DateUtil.ceilDate(TOMORROW)));
+        assertEquals(events, FilterUtil.filterEventWithDateRange(events, DateUtil.floorDate(YESTERDAY), null));
         assertEquals(events, FilterUtil.filterEventWithDateRange(events, null, null));
     }
     
@@ -367,16 +367,16 @@ public class FilterUtilTest {
         
         //filter out overdue events 
         events.addAll(currentEvents);
-        assertNotEquals(events, FilterUtil.filterEventWithDateRange(events, DateUtil.floorDate(ytd), DateUtil.ceilDate(ytd)));
+        assertNotEquals(events, FilterUtil.filterEventWithDateRange(events, DateUtil.floorDate(YESTERDAY), DateUtil.ceilDate(YESTERDAY)));
         //filter out both overdue and current events
         events.addAll(currentEvents);
-        assertNotEquals(events, FilterUtil.filterEventWithDateRange(events, DateUtil.ceilDate(tmr), DateUtil.ceilDate(tmr)));
+        assertNotEquals(events, FilterUtil.filterEventWithDateRange(events, DateUtil.ceilDate(TOMORROW), DateUtil.ceilDate(TOMORROW)));
     }
     
     private Task generateFirstTestTask() {
         Task task = new Task();
         task.setName("Buy Milk");
-        task.setCalendarDateTime(today);
+        task.setCalendarDateTime(TODAY);
         task.addTag("personal");
         task.setCompleted();
         return task;
@@ -385,7 +385,7 @@ public class FilterUtilTest {
     private Task generateSecondTestTask() {
         Task task = new Task();
         task.setName("CS2103");
-        task.setCalendarDateTime(tmr);
+        task.setCalendarDateTime(TOMORROW);
         task.addTag("CS2103");
         return task;
     }
@@ -401,8 +401,8 @@ public class FilterUtilTest {
     private List<Event> generateOverdueEvents() {
         List<Event> events = new ArrayList<Event>();
         Event event = new Event();
-        event.setStartDate(ytd);
-        event.setEndDate(ytd);
+        event.setStartDate(YESTERDAY);
+        event.setEndDate(YESTERDAY);
         event.setName("CS2103 V0.5");
         event.addTag("CS2103");
         events.add(event);
@@ -416,8 +416,8 @@ public class FilterUtilTest {
     private List<Event> generateCurrentEvents() {
         List<Event> events = new ArrayList<Event>();
         Event event = new Event();
-        event.setStartDate(today);
-        event.setEndDate(tmr);
+        event.setStartDate(TODAY);
+        event.setEndDate(TOMORROW);
         event.setName("CS3216 9th Steps");
         event.addTag("CS3216");
         events.add(event);
